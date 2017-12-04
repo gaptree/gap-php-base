@@ -1,0 +1,49 @@
+{
+    "name": "gap/base",
+    "type": "library",
+    "description": "Gap Base",
+    "keywords": [
+        "gap"
+    ],
+    "homepage": "https://project.tecposter.cn/diffusion/63/",
+    "authors": [
+        {
+            "name": "zhanjh",
+            "email": "zhanjh@126.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1.0",
+        "gap/database": "^1.0",
+        "gap/config": "^1.0",
+        "gap/http": "^1.0",
+        "gap/routing": "^1.0",
+        "foil/foil": "^0.6.7",
+        "gap/security": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Gap\\Base\\": "src"
+        },
+        "files": [
+            "fun/functions.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "phpunit\\Gap\\Base\\": "phpunit"
+        }
+    },
+    "scripts": {
+        "test": [
+            "@phpcs",
+            "@phpmd",
+            "@phpstan",
+            "@phpunit"
+        ],
+        "phpunit": "phpunit",
+        "phpstan": "phpstan analyse -l 7 -c phpstan.neon phpunit src",
+        "phpcs": "phpcs --report=full --standard=psr2 --extensions=php src phpunit",
+        "phpmd": "phpmd src,phpunit text cleancode,codesize,controversial,design,naming,unusedcode"
+    }
+}
