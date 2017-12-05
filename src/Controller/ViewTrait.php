@@ -1,10 +1,11 @@
 <?php
 namespace Gap\Base\Controller;
 
-use \Gap\Base\Controller\View\RegisterMeta;
-use \Gap\Base\Controller\View\RegisterTrans;
-use \Gap\Base\Controller\View\RegisterUrl;
-use \Gap\Base\Controller\View\RegisterCsrf;
+use Gap\Base\Controller\View\RegisterMeta;
+use Gap\Base\Controller\View\RegisterTrans;
+use Gap\Base\Controller\View\RegisterUrl;
+use Gap\Base\Controller\View\RegisterCsrf;
+use Gap\Http\Response;
 
 trait ViewTrait
 {
@@ -51,7 +52,7 @@ trait ViewTrait
 
     protected function view($tpl, $data = [])
     {
-        return $this->response($this->render($tpl, $data));
+        return new Response($this->render($tpl, $data));
     }
 
     protected function obj($obj)

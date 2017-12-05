@@ -1,72 +1,108 @@
 <?php
 namespace Gap\Base\Controller\View;
 
-use Gap\Http\UrlManager;
-use Gap\Routing\BuildSiteUrl;
-use Gap\Routing\BuildRouteUrl;
+use Gap\Routing\SiteUrlBuilder;
+use Gap\Routing\RouteUrlBuilder;
 
 class RegisterUrl extends RegisterBase
 {
-    public function register()
+    public function register(): void
     {
-        $localeManager = $this->app->get('localeManager');
-        $locale = $localeManager->getMode() === 'path' ?
-            $localeManager->getLocaleKey() : '';
+        if ($siteUrlBuilder = $this->app->get('siteUrlBuilder')) {
+            $this->registerSiteUrl($siteUrlBuilder);
+        }
 
-        $buildSiteUrl = new BuildSiteUrl($this->app->get('siteManager'));
+        if ($routeUrlBuilder = $this->app->get('routeUrlBuilder')) {
+            $this->registerRouteUrl($routeUrlBuilder);
+        }
+    }
 
-        $buildRouteUrl = new BuildRouteUrl(
-            $this->app->get('router'),
-            $buildSiteUrl,
-            $locale
-        );
-
+    protected function registerSiteUrl(SiteUrlBuilder $siteUrlBuilder): void
+    {
         $this->engine->registerFunction(
             'url',
-            function ($site, $uri, $protocol = '') use ($buildSiteUrl) {
-                return $buildSiteUrl->url($site, $uri, $protocol);
+            function ($site, $uri, $protocol = '') use ($siteUrlBuilder) {
+                return $siteUrlBuilder->url($site, $uri, $protocol);
             }
         );
 
         $this->engine->registerFunction(
             'staticUrl',
-            function ($uri, $protocol = '') use ($buildSiteUrl) {
-                return $buildSiteUrl->staticUrl($uri, $protocol);
+            function ($uri, $protocol = '') use ($siteUrlBuilder) {
+                return $siteUrlBuilder->staticUrl($uri, $protocol);
             }
         );
+    }
+
+    protected function registerRouteUrl(RouteUrlBuilder $routeUrlBuilder): void
+    {
+        if ($this->app->has('localeManager')) {
+            $localeManager = $this->app->get('localeManager');
+            $localeKey = $localeManager->getMode() === 'path' ?
+                $localeManager->getLocaleKey() : '';
+
+            if ($localeKey) {
+                $routeUrlBuilder->setLocaleKey($localeKey);
+            }
+        }
 
         $this->engine->registerFunction(
             'routeUrl',
-            function ($name, $params = [], $query = [], $protocol = '') use ($buildRouteUrl) {
-                return $buildRouteUrl->routeUrl($name, $params, $query, $protocol);
+            function (
+                string $name,
+                array $params = [],
+                array $query = [],
+                array $opts = []
+            ) use ($routeUrlBuilder) {
+                return $routeUrlBuilder->routeUrl($name, $params, $query, $opts);
             }
         );
 
         $this->engine->registerFunction(
             'routeGet',
-            function ($name, $params = [], $query = [], $protocol = '') use ($buildRouteUrl) {
-                return $buildRouteUrl->routeGet($name, $params, $query, $protocol);
+            function (
+                string $name,
+                array $params = [],
+                array $query = [],
+                array $opts = []
+            ) use ($routeUrlBuilder) {
+                return $routeUrlBuilder->routeGet($name, $params, $query, $opts);
             }
         );
 
         $this->engine->registerFunction(
             'routePost',
-            function ($name, $params = [], $query = [], $protocol = '') use ($buildRouteUrl) {
-                return $buildRouteUrl->routePost($name, $params, $query, $protocol);
+            function (
+                string $name,
+                array $params = [],
+                array $query = [],
+                array $opts = []
+            ) use ($routeUrlBuilder) {
+                return $routeUrlBuilder->routePost($name, $params, $query, $opts);
             }
         );
 
         $this->engine->registerFunction(
             'routeGetRest',
-            function ($name, $params = [], $query = [], $protocol = '') use ($buildRouteUrl) {
-                return $buildRouteUrl->routeGetRest($name, $params, $query, $protocol);
+            function (
+                string $name,
+                array $params = [],
+                array $query = [],
+                array $opts = []
+            ) use ($routeUrlBuilder) {
+                return $routeUrlBuilder->routeGetRest($name, $params, $query, $opts);
             }
         );
 
         $this->engine->registerFunction(
             'routePostRest',
-            function ($name, $params = [], $query = [], $protocol = '') use ($buildRouteUrl) {
-                return $buildRouteUrl->routePostRest($name, $params, $query, $protocol);
+            function (
+                string $name,
+                array $params = [],
+                array $query = [],
+                array $opts = []
+            ) use ($routeUrlBuilder) {
+                return $routeUrlBuilder->routePostRest($name, $params, $query, $opts);
             }
         );
     }

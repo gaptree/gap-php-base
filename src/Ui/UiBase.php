@@ -5,5 +5,4 @@ abstract class UiBase
 {
     use \Gap\Base\Controller\MainTrait;
     use \Gap\Base\Controller\ViewTrait;
-    use \Gap\Base\Controller\UrlTrait;
 }

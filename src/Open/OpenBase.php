@@ -1,12 +1,13 @@
 <?php
 namespace Gap\Base\Open;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Gap\Http\JsonResponse;
 
 abstract class OpenBase
 {
     use \Gap\Base\Controller\MainTrait;
 
+    // deprecated
     protected function jsonResponse($data = null, int $status = 200, array $headers = array())
     {
         return new JsonResponse($data, $status, $headers);

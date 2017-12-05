@@ -239,11 +239,11 @@
         },
         {
             "name": "gap/http",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://project.tecposter.cn/diffusion/61/gap-php-http.git",
-                "reference": "870a92cafe4e38ff290e52ff6d1fac48db128383"
+                "reference": "b5abf830a3b23096bcd1826f2c85798175607560"
             },
             "require": {
                 "php": ">=7.1.0",
@@ -265,15 +265,15 @@
                     "email": "zhanjh@126.com"
                 }
             ],
-            "time": "2017-12-04T09:44:09+00:00"
+            "time": "2017-12-05T06:44:06+00:00"
         },
         {
             "name": "gap/routing",
-            "version": "1.0.0",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://project.tecposter.cn/diffusion/51/gap-php-routing.git",
-                "reference": "f3220be0c3034e1bfee6a69ee85abc21b8c4c9f8"
+                "reference": "57258f8887e9e6ebf329536cc21e3de3e365269d"
             },
             "require": {
                 "nikic/fast-route": "^1.2",
@@ -285,7 +285,31 @@
                     "Gap\\Routing\\": "src"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "phpunit\\Gap\\Routing\\": "phpunit"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "@phpcs",
+                    "@phpmd",
+                    "@phpstan",
+                    "@phpunit"
+                ],
+                "phpunit": [
+                    "phpunit"
+                ],
+                "phpstan": [
+                    "phpstan analyse -l 7 -c phpstan.neon phpunit src"
+                ],
+                "phpcs": [
+                    "phpcs --report=full --standard=psr2 --extensions=php src phpunit"
+                ],
+                "phpmd": [
+                    "phpmd src,phpunit text cleancode,codesize,controversial,design,naming,unusedcode"
+                ]
+            },
             "authors": [
                 {
                     "name": "zhanjh",
@@ -297,7 +321,7 @@
             "keywords": [
                 "gap"
             ],
-            "time": "2017-12-03T11:44:25+00:00"
+            "time": "2017-12-05T08:43:31+00:00"
         },
         {
             "name": "gap/security",
@@ -649,7 +673,7 @@
         },
         {
             "name": "symfony/http-foundation",
-            "version": "v3.4.0",
+            "version": "v3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
@@ -821,25 +845,25 @@
         },
         {
             "name": "symfony/psr-http-message-bridge",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/psr-http-message-bridge.git",
-                "reference": "66085f246d3893cbdbcec5f5ad15ac60546cf0de"
+                "reference": "b2098405d8644f6dc4c36febcee6a77c0fdecdff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/symfony/psr-http-message-bridge/66085f246d3893cbdbcec5f5ad15ac60546cf0de.zip",
-                "reference": "66085f246d3893cbdbcec5f5ad15ac60546cf0de",
+                "url": "https://files.phpcomposer.com/files/symfony/psr-http-message-bridge/b2098405d8644f6dc4c36febcee6a77c0fdecdff.zip",
+                "reference": "b2098405d8644f6dc4c36febcee6a77c0fdecdff",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
                 "psr/http-message": "~1.0",
-                "symfony/http-foundation": "~2.3|~3.0"
+                "symfony/http-foundation": "~2.3|~3.0|~4.0"
             },
             "require-dev": {
-                "symfony/phpunit-bridge": "~2.7|~3.0"
+                "symfony/phpunit-bridge": "~3.2|4.0"
             },
             "suggest": {
                 "psr/http-message-implementation": "To use the HttpFoundation factory",
@@ -877,7 +901,7 @@
                 "http-message",
                 "psr-7"
             ],
-            "time": "2016-09-14T18:37:20+00:00"
+            "time": "2017-07-23T09:13:43+00:00"
         },
         {
             "name": "zendframework/zend-diactoros",
