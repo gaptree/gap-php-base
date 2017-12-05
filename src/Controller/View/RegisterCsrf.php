@@ -37,5 +37,6 @@ class RegisterCsrf extends RegisterBase
         $csrf = new CsrfProvider();
         $token = $csrf->token();
         $session->set('token', $token);
+        return $token;
     }
 }

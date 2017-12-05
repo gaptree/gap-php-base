@@ -10,8 +10,9 @@ class RegisterMeta extends RegisterBase
         if (!$this->app->has('meta')) {
             $this->engine->registerFunction(
                 'meta',
-                function () {
-                    throw new \Exception('Please register meta');
+                function ($str) {
+                    return "#?$str?";
+                    //throw new \Exception('Please register meta');
                 }
             );
 
