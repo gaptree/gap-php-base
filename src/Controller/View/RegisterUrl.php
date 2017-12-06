@@ -21,15 +21,20 @@ class RegisterUrl extends RegisterBase
     {
         $this->engine->registerFunction(
             'url',
-            function ($site, $uri, $protocol = '') use ($siteUrlBuilder) {
-                return $siteUrlBuilder->url($site, $uri, $protocol);
+            function (
+                string $site,
+                string $uri,
+                array $query = [],
+                string $protocol = ''
+            ) use ($siteUrlBuilder) {
+                return $siteUrlBuilder->url($site, $uri, $query, $protocol);
             }
         );
 
         $this->engine->registerFunction(
             'staticUrl',
-            function ($uri, $protocol = '') use ($siteUrlBuilder) {
-                return $siteUrlBuilder->staticUrl($uri, $protocol);
+            function (string $uri, array $query = [], string $protocol = '') use ($siteUrlBuilder) {
+                return $siteUrlBuilder->staticUrl($uri, $query, $protocol);
             }
         );
     }
