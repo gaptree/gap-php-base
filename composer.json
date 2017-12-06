@@ -19,14 +19,17 @@
         "gap/http": "^1.0",
         "gap/routing": "^1.0",
         "foil/foil": "^0.6.7",
-        "gap/security": "^1.0"
+        "gap/security": "^1.0",
+        "gap/i18n": "^1.0",
+        "gap/cache": "^1.0"
     },
     "autoload": {
         "psr-4": {
             "Gap\\Base\\": "src"
         },
         "files": [
-            "fun/functions.php"
+            "fun/functions.php",
+            "fun/app-register.php"
         ]
     },
     "autoload-dev": {
