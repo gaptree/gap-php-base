@@ -5,6 +5,7 @@ use Gap\Base\Controller\View\RegisterMeta;
 use Gap\Base\Controller\View\RegisterTrans;
 use Gap\Base\Controller\View\RegisterUrl;
 use Gap\Base\Controller\View\RegisterCsrf;
+use Gap\Base\Controller\View\RegisterLocale;
 use Gap\Http\Response;
 
 trait ViewTrait
@@ -28,7 +29,8 @@ trait ViewTrait
         $this->viewEngine->useData([
             'app' => $this->app,
             'config' => $this->app->getConfig(),
-            'request' => $this->request
+            'request' => $this->request,
+            'route' => $this->route
         ]);
 
         $this->obj(new RegisterMeta($this->app, $this->request, $this->viewEngine))
@@ -38,6 +40,8 @@ trait ViewTrait
         $this->obj(new RegisterUrl($this->app, $this->request, $this->viewEngine))
             ->register();
         $this->obj(new RegisterCsrf($this->app, $this->request, $this->viewEngine))
+            ->register();
+        $this->obj(new RegisterLocale($this->app, $this->request, $this->viewEngine))
             ->register();
 
         return $this->viewEngine;
