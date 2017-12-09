@@ -13,30 +13,30 @@ class RegisterCsrf extends RegisterBase
         $this->engine->registerFunction(
             'csrf',
             function () use ($self) {
-                $token = $self->token();
-                return "<input type=\"hidden\" name=\"token\" value=\"$token\">";
+                $token = $self->getCsrfToken();
+                return "<input type=\"hidden\" name=\"csrfToken\" value=\"$token\">";
             }
         );
 
         $this->engine->registerFunction(
-            'token',
+            'csrfToken',
             function () use ($self) {
-                return $self->token();
+                return $self->getCsrfToken();
             }
         );
     }
 
     // todo try protected
-    public function token(): string
+    public function getCsrfToken(): string
     {
         $session = $this->request->getSession();
-        if ($token = $session->get('token')) {
-            return $token;
+        if ($csrfToken = $session->get('csrfToken')) {
+            return $csrfToken;
         }
 
         $csrf = new CsrfProvider();
-        $token = $csrf->token();
-        $session->set('token', $token);
-        return $token;
+        $csrfToken = $csrf->token();
+        $session->set('csrfToken', $csrfToken);
+        return $csrfToken;
     }
 }

@@ -8,9 +8,8 @@ class CsrfFilter extends RequestFilterBase
     public function filter(): void
     {
         if ($this->request->isMethod('POST')) {
-            // todo change token -> csrf_token
-            $postToken = $this->request->request->get('csrf_token');
-            $sessionToken = $this->request->getSession()->get('csrf_token');
+            $postToken = $this->request->request->get('csrfToken');
+            $sessionToken = $this->request->getSession()->get('csrfToken');
 
             if (!hash_equals($postToken, $sessionToken)) {
                 // todo
