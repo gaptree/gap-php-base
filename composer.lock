@@ -239,11 +239,11 @@
         },
         {
             "name": "gap/database",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://project.tecposter.cn/diffusion/52/gap-php-database.git",
-                "reference": "22583e63524c32d826ce34e48e4813373eb4d948"
+                "reference": "6068dce0a45ce46a224661d816853b272a77eb38"
             },
             "require": {
                 "php": ">=7.1.0"
@@ -266,15 +266,15 @@
             "keywords": [
                 "gap"
             ],
-            "time": "2017-12-03T12:09:31+00:00"
+            "time": "2017-12-11T10:10:34+00:00"
         },
         {
             "name": "gap/http",
-            "version": "1.0.2",
+            "version": "1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://project.tecposter.cn/diffusion/61/gap-php-http.git",
-                "reference": "1403a17e26a138a16ba35fa1c5cd05c5dfea7972"
+                "reference": "2fc096ddd27bf232db382641b5a19f076f946c0b"
             },
             "require": {
                 "php": ">=7.1.0",
@@ -293,7 +293,7 @@
                     "email": "zhanjh@126.com"
                 }
             ],
-            "time": "2017-12-06T03:27:05+00:00"
+            "time": "2017-12-15T05:25:49+00:00"
         },
         {
             "name": "gap/i18n",
@@ -329,11 +329,11 @@
         },
         {
             "name": "gap/routing",
-            "version": "1.0.2",
+            "version": "1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://project.tecposter.cn/diffusion/51/gap-php-routing.git",
-                "reference": "57258f8887e9e6ebf329536cc21e3de3e365269d"
+                "reference": "04e518198b2a8cccf0332537e1fa86a03a86b62e"
             },
             "require": {
                 "nikic/fast-route": "^1.2",
@@ -345,31 +345,7 @@
                     "Gap\\Routing\\": "src"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "phpunit\\Gap\\Routing\\": "phpunit"
-                }
-            },
-            "scripts": {
-                "test": [
-                    "@phpcs",
-                    "@phpmd",
-                    "@phpstan",
-                    "@phpunit"
-                ],
-                "phpunit": [
-                    "phpunit"
-                ],
-                "phpstan": [
-                    "phpstan analyse -l 7 -c phpstan.neon phpunit src"
-                ],
-                "phpcs": [
-                    "phpcs --report=full --standard=psr2 --extensions=php src phpunit"
-                ],
-                "phpmd": [
-                    "phpmd src,phpunit text cleancode,codesize,controversial,design,naming,unusedcode"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "authors": [
                 {
                     "name": "zhanjh",
@@ -381,7 +357,7 @@
             "keywords": [
                 "gap"
             ],
-            "time": "2017-12-05T08:43:31+00:00"
+            "time": "2017-12-09T09:28:33+00:00"
         },
         {
             "name": "gap/security",
@@ -683,16 +659,16 @@
         },
         {
             "name": "symfony/http-foundation",
-            "version": "v3.4.1",
+            "version": "v3.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "d9625c8abb907e0ca2d7506afd7a719a572c766f"
+                "reference": "59bf131b5460227a2f583a7dbe6b179f98f9e0a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/symfony/http-foundation/d9625c8abb907e0ca2d7506afd7a719a572c766f.zip",
-                "reference": "d9625c8abb907e0ca2d7506afd7a719a572c766f",
+                "url": "https://files.phpcomposer.com/files/symfony/http-foundation/59bf131b5460227a2f583a7dbe6b179f98f9e0a5.zip",
+                "reference": "59bf131b5460227a2f583a7dbe6b179f98f9e0a5",
                 "shasum": ""
             },
             "require": {
@@ -733,7 +709,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "time": "2017-11-30T14:56:21+00:00"
+            "time": "2017-12-14T19:40:10+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
