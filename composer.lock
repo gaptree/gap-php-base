@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "855c13ef86dda8a6ce9efe00f8927476",
+    "content-hash": "02c620939305d4cf7db04b472eab8e81",
     "packages": [
         {
             "name": "aura/html",
@@ -267,6 +267,41 @@
                 "gap"
             ],
             "time": "2017-12-11T10:10:34+00:00"
+        },
+        {
+            "name": "gap/dto",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://project.tecposter.cn/diffusion/75/gap-php-dto.git",
+                "reference": "b52e3e03fc221f4f68d619a6840eafc632d7a61b"
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Gap\\Dto\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "zhanjh",
+                    "email": "zhanjh@126.com"
+                }
+            ],
+            "description": "Gap Dto",
+            "homepage": "https://project.tecposter.cn/diffusion/75/",
+            "keywords": [
+                "dto",
+                "gap"
+            ],
+            "time": "2017-12-25T09:34:39+00:00"
         },
         {
             "name": "gap/http",
