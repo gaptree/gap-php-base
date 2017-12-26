@@ -49,5 +49,8 @@
         "phpstan": "phpstan analyse -l 7 -c phpstan.neon phpunit src",
         "phpcs": "phpcs --report=full --standard=psr2 --extensions=php src phpunit",
         "phpmd": "phpmd src,phpunit text cleancode,codesize,controversial,design,naming,unusedcode"
-    }
+    },
+    "bin": [
+        "bin/gap"
+    ]
 }
