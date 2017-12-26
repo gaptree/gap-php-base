@@ -36,5 +36,10 @@ if (file_exists('setting/setting.php')) {
 }
 
 $app = new \Gap\Base\App($config);
+
+if ($config->get('db')) {
+    register_dmg($app);
+}
+
 $consoleHandler = new \Gap\Base\ConsoleHandler($app);
 $consoleHandler->handle($argv, $argc);
