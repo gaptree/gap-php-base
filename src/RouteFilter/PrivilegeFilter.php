@@ -23,16 +23,16 @@ class PrivilegeFilter extends RouteFilterBase
 
         $fetchUserService = new $serviceClass($this->app);
 
-        $userId = $this->request->getUserId();
+        $userId = $this->request->get('session')->get('userId');
         if (!$userId) {
             throw new NotLoginException("access-$access-need-login");
         }
-        $user = $fetchUserService->fetchOneByUserId($userId);
+        $user = $fetchUserService->fetchByUserId($userId);
         if (!$user) {
             throw new NotLoginException("userId[$userId]-not-found");
         }
 
-        if ($user->getPrivilege() < $privilege) {
+        if ($user->privilege < $privilege) {
             throw new NoPermissionException("access-$access");
         }
     }
