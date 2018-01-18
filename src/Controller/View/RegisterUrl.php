@@ -87,6 +87,13 @@ class RegisterUrl extends RegisterBase
             }
         );
 
+        $this->registerRouteRestUrl($routeUrlBuilder); // deprecated
+
+        $this->registerRouteOpenUrl($routeUrlBuilder);
+    }
+
+    protected function registerRouteRestUrl(RouteUrlBuilder $routeUrlBuilder): void
+    {
         $this->engine->registerFunction(
             'routeGetRest',
             function (
@@ -108,6 +115,33 @@ class RegisterUrl extends RegisterBase
                 array $opts = []
             ) use ($routeUrlBuilder) {
                 return $routeUrlBuilder->routePostRest($name, $params, $query, $opts);
+            }
+        );
+    }
+
+    protected function registerRouteOpenUrl(RouteUrlBuilder $routeUrlBuilder): void
+    {
+        $this->engine->registerFunction(
+            'routeGetOpen',
+            function (
+                string $name,
+                array $params = [],
+                array $query = [],
+                array $opts = []
+            ) use ($routeUrlBuilder) {
+                return $routeUrlBuilder->routeGetOpen($name, $params, $query, $opts);
+            }
+        );
+
+        $this->engine->registerFunction(
+            'routePostOpen',
+            function (
+                string $name,
+                array $params = [],
+                array $query = [],
+                array $opts = []
+            ) use ($routeUrlBuilder) {
+                return $routeUrlBuilder->routePostOpen($name, $params, $query, $opts);
             }
         );
     }
