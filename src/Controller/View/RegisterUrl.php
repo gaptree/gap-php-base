@@ -1,7 +1,7 @@
 <?php
 namespace Gap\Base\Controller\View;
 
-use Gap\Routing\SiteUrlBuilder;
+use Gap\Http\SiteUrlBuilder;
 use Gap\Routing\RouteUrlBuilder;
 
 class RegisterUrl extends RegisterBase

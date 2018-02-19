@@ -55,18 +55,17 @@ class App
         return $this->cacheManager;
     }
 
-    public function getLocaleManager(): LocaleManager
+    public function getLocaleManager(): ?LocaleManager
     {
         if ($this->localeManager) {
             return $this->localeManager;
         }
 
         $localeOpts = $this->config->get('i18n.locale');
-        /*
         if (empty($localeOpts)) {
-            throw new \Exception('cannot find config i18n.locale');
+            return null;
         }
-        */
+
         $this->localeManager = new LocaleManager($localeOpts);
         return $this->localeManager;
     }

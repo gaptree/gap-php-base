@@ -24,13 +24,22 @@
         "gap/cache": "^1.0",
         "gap/dto": "^1.0"
     },
+    "repositories": {
+        "0": {
+            "type": "git",
+            "url": "https://project.tecposter.cn/diffusion/61/gap-php-http.git"
+        },
+        "1": {
+            "type": "git",
+            "url": "https://project.tecposter.cn/diffusion/51/gap-php-routing.git"
+        }
+    },
     "autoload": {
         "psr-4": {
             "Gap\\Base\\": "src"
         },
         "files": [
-            "fun/functions.php",
-            "fun/app-register.php"
+            "fun/functions.php"
         ]
     },
     "autoload-dev": {
@@ -52,5 +61,7 @@
     },
     "bin": [
         "bin/gap"
-    ]
+    ],
+    "require-dev": {
+    }
 }

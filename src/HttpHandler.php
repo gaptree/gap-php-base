@@ -1,107 +1,52 @@
 <?php
 namespace Gap\Base;
 
-use Gap\Base\Exception\NotLoginException;
-use Gap\Base\Exception\NoPermissionException;
-use Gap\Base\Exception\NoLocaleException;
 use Gap\Base\App;
+
 use Gap\Routing\Route;
+use Gap\Routing\Router;
+use Gap\Routing\RouteFilterManager;
+
 use Gap\Http\Request;
-use Gap\Http\RedirectResponse;
+use Gap\Http\SiteManager;
+use Gap\Http\Session\SessionBuilder;
+use Gap\Http\RequestFilterManager;
+
+use Symfony\Component\HttpFoundation\Response;
 
 class HttpHandler
 {
     protected $app;
+    protected $siteManager;
     protected $router;
 
-    public function __construct(App $app)
-    {
+    protected $requestFilterManager;
+    protected $routeFilterManager;
+
+    public function __construct(
+        App $app,
+        SiteManager $siteManager,
+        Router $router
+    ) {
         $this->app = $app;
-        $this->router = $this->app->get('router');
+        $this->siteManager = $siteManager;
+        $this->router = $router;
     }
 
-    public function handle(Request $request)
+    public function handle(Request $request): Response
     {
-        $request->setSession($this->app->get('session'));
-        $route = null;
+        $this->getRequestFilterManager()->filter($request);
+        $route = $this->router->dispatch(
+            $this->siteManager->getSite($request->getHttpHost()),
+            $request->getMethod(),
+            (new ParseLocalePath($this->app->getLocaleManager()))->parse($request)
+        );
+        $this->getRouteFilterManager()->filter($request, $route);
 
-        try {
-            if ($this->app->has('requestFilterManager')) {
-                $this->app->get('requestFilterManager')
-                    ->filter($request);
-            }
-
-            $route = $this->router->dispatch(
-                $this->app->get('siteManager')->getSite($request->getHttpHost()),
-                $request->getMethod(),
-                $this->parseLocalePath($request)
-            );
-
-            if ($this->app->has('routeFilterManager')) {
-                $this->app->get('routeFilterManager')
-                    ->filter($request, $route);
-            }
-            return $this->callControllerAction($request, $route);
-        } catch (NoLocaleException $e) {
-            $homeUrl = $this->app->get('routeUrlBuilder')
-                ->routeUrl('home', [], ['ref' => $e->getMessage()]);
-            return new RedirectResponse($homeUrl);
-        } catch (NotLoginException $e) {
-            return $this->handleException(
-                $request,
-                $this->app->getConfig()->get('exception.handler.notLogin'),
-                $e,
-                $route
-            );
-        } catch (NoPermissionException $e) {
-            return $this->handleException(
-                $request,
-                $this->app->getConfig()->get('exception.handler.noPermission'),
-                $e,
-                $route
-            );
-        }
+        return $this->callControllerAction($request, $route);
     }
 
-    protected function parseLocalePath(Request $request)
-    {
-        $pathinfo = $request->getPathInfo();
-        if (!$this->app->has('localeManager')) {
-            return $pathinfo;
-        }
-
-        $localeManager = $this->app->get('localeManager');
-        if ($localeManager->getMode() !== 'path') {
-            $localeManager->setLocaleKey($localeManager->getDefaultLocaleKey());
-            return $pathinfo;
-        }
-
-        if ($pathinfo === '/') {
-            throw new NoLocaleException('no locale');
-        }
-
-        $path = substr($pathinfo, 1);
-        $pos = strpos($path, '/');
-        if ($pos === false) {
-            if (!$localeManager->isAvailableLocaleKey($path)) {
-                throw new \Exception('error request');
-            }
-            $localeManager->setLocaleKey($path);
-            return '/';
-        }
-
-        $localeKey = substr($path, 0, $pos);
-        if (!$localeManager->isAvailableLocaleKey($localeKey)) {
-            throw new \Exception('error request');
-        }
-
-        $path = substr($path, $pos);
-        $localeManager->setLocaleKey($localeKey);
-        return $path;
-    }
-
-
-    protected function callControllerAction(Request $request, Route $route)
+    protected function callControllerAction(Request $request, Route $route): Response
     {
         list($controllerClass, $fun) = explode('@', $route->getAction());
 
@@ -118,18 +63,23 @@ class HttpHandler
         return $controller->$fun();
     }
 
-    protected function handleException(Request $request, $handlerClass, $exception, $route)
+    protected function getRequestFilterManager(): RequestFilterManager
     {
-        if (empty($route)) {
-            //$site = $this->app->get('siteManager')->getSite($request->getHttpHost());
-            $route = new Route([
-                'name' => 'exception',
-                'site' => 'fake',
-                'app' => 'fake',
-                'access' => 'public'
-            ]);
+        if ($this->requestFilterManager) {
+            return $this->requestFilterManager;
         }
-        $handler = new $handlerClass($this->app, $request, $route);
-        return $handler->handle($exception);
+
+        $this->requestFilterManager = new RequestFilterManager();
+        return $this->requestFilterManager;
+    }
+
+    protected function getRouteFilterManager(): RouteFilterManager
+    {
+        if ($this->routeFilterManager) {
+            return $this->routeFilterManager;
+        }
+
+        $this->routeFilterManager = new RouteFilterManager();
+        return $this->routeFilterManager;
     }
 }
