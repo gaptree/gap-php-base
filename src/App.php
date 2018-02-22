@@ -11,8 +11,8 @@ use Gap\I18n\Translator\Translator;
 class App
 {
     protected $config;
-    protected $databaseManager;
-    protected $cacheManager;
+    protected $dmg;
+    protected $cmg;
 
     protected $localeManager;
     protected $translator;
@@ -20,9 +20,11 @@ class App
     //protected $singletons = [];
     //protected $refs = []; // reflection class & functions
 
-    public function __construct(Config $config)
+    public function __construct(Config $config, DataBasemanager $dmg, CacheManager $cmg)
     {
         $this->config = $config;
+        $this->dmg = $dmg;
+        $this->cmg = $cmg;
     }
 
     public function getConfig(): Config
@@ -30,29 +32,35 @@ class App
         return $this->config;
     }
 
-    public function getDatabaseManager(): DatabaseManager
+    public function getDmg(): DatabaseManager
     {
-        if ($this->databaseManager) {
-            return $this->databaseManager;
+        return $this->dmg;
+        /*
+        if ($this->dmg) {
+            return $this->dmg;
         }
 
-        $this->databaseManager = new DatabaseManager(
+        $this->dmg = new DatabaseManager(
             $this->config->get('db'),
             $this->config->get('server.id')
         );
-        return $this->databaseManager;
+        return $this->dmg;
+        */
     }
 
-    public function getCacheManager(): CacheManager
+    public function getCmg(): CacheManager
     {
-        if ($this->cacheManager) {
-            return $this->cacheManager;
+        return $this->cmg;
+        /*
+        if ($this->cmg) {
+            return $this->cmg;
         }
 
-        $this->cacheManager = new CacheManager(
+        $this->cmg = new CacheManager(
             $this->config->get('cache')
         );
-        return $this->cacheManager;
+        return $this->cmg;
+        */
     }
 
     public function getLocaleManager(): ?LocaleManager
@@ -70,16 +78,18 @@ class App
         return $this->localeManager;
     }
 
-    public function getTranslator(): Translator
+    public function getTranslator(): ?Translator
     {
         if ($this->translator) {
             return $this->translator;
         }
 
-        $this->translator = new Translator(
-            $this->getDatabaseManager()->connect($this->config->get('i18n.db')),
-            $this->getCacheManager()->connect($this->config->get('i18n.cache'))
-        );
+        if ($this->config->has('i18n')) {
+            $this->translator = new Translator(
+                $this->getDmg()->connect($this->config->get('i18n.db')),
+                $this->getCmg()->connect($this->config->get('i18n.cache'))
+            );
+        }
         return $this->translator;
     }
 

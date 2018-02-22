@@ -1,19 +1,38 @@
 <?php
-namespace Gap\Base\Controller\View;
+namespace Gap\Base\View\Register;
 
 use Gap\Http\SiteUrlBuilder;
 use Gap\Routing\RouteUrlBuilder;
+use Gap\I18n\Locale\LocaleManager;
+use Foil\Engine;
 
-class RegisterUrl extends RegisterBase
+class RegisterUrl implements RegisterInterface
 {
-    public function register(): void
+    protected $siteUrlBuilder;
+    protected $routeUrlBuilder;
+    protected $localeManager;
+    protected $engine;
+
+    public function __construct(
+        ?SiteUrlBuilder $siteUrlBuilder,
+        ?RouteUrlBuilder $routeUrlBuilder,
+        ?LocaleManager $localeManager
+    ) {
+        $this->siteUrlBuilder = $siteUrlBuilder;
+        $this->routeUrlBuilder = $routeUrlBuilder;
+        $this->localeManager = $localeManager;
+    }
+
+    public function register(Engine $engine): void
     {
-        if ($siteUrlBuilder = $this->app->get('siteUrlBuilder')) {
-            $this->registerSiteUrl($siteUrlBuilder);
+        $this->engine = $engine;
+
+        if ($this->siteUrlBuilder) {
+            $this->registerSiteUrl($this->siteUrlBuilder);
         }
 
-        if ($routeUrlBuilder = $this->app->get('routeUrlBuilder')) {
-            $this->registerRouteUrl($routeUrlBuilder);
+        if ($this->routeUrlBuilder) {
+            $this->registerRouteUrl($this->routeUrlBuilder);
         }
     }
 
@@ -41,8 +60,7 @@ class RegisterUrl extends RegisterBase
 
     protected function registerRouteUrl(RouteUrlBuilder $routeUrlBuilder): void
     {
-        if ($this->app->has('localeManager')) {
-            $localeManager = $this->app->get('localeManager');
+        if ($localeManager = $this->localeManager) {
             $localeKey = $localeManager->getMode() === 'path' ?
                 $localeManager->getLocaleKey() : '';
 

@@ -1,14 +1,22 @@
 <?php
-namespace Gap\Base\Controller\View;
+namespace Gap\Base\View\Register;
 
 use Gap\Meta\Meta;
+use Foil\Engine;
 
-class RegisterMeta extends RegisterBase
+class RegisterMeta implements RegisterInterface
 {
-    public function register()
+    protected $meta;
+
+    public function __construct(?Meta $meta)
     {
-        if (!$this->app->has('meta')) {
-            $this->engine->registerFunction(
+        $this->meta = $meta;
+    }
+
+    public function register(Engine $engine): void
+    {
+        if (empty($this->meta)) {
+            $engine->registerFunction(
                 'meta',
                 function ($str) {
                     return "#?$str?";
@@ -19,9 +27,8 @@ class RegisterMeta extends RegisterBase
             return;
         }
 
-        $meta = $this->app->get('meta');
-
-        $this->engine->registerFunction(
+        $meta = $this->meta;
+        $engine->registerFunction(
             'meta',
             function ($str, $vars = [], $localeKey = '') use ($meta) {
                 return $meta->get($str, $vars, $localeKey);

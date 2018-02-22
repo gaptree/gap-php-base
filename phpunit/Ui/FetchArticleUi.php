@@ -1,16 +1,13 @@
 <?php
 namespace phpunit\Gap\Base\Ui;
 
-use Gap\Http\JsonResponse;
+use Gap\Http\Response;
+use Gap\Base\Ui\UiBase;
 
-class FetchArticleUi
+class FetchArticleUi extends UiBase
 {
-    public function bootstrap(): void
+    public function show(): Response
     {
-    }
-
-    public function show(): JsonResponse
-    {
-        return new JsonResponse(['welcome' => 'ok']);
+        return $this->view('fetchArticle');
     }
 }

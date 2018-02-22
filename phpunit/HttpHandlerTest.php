@@ -8,12 +8,14 @@ use Gap\Routing\RouteCollection;
 use Gap\Routing\RouteCollectionLoader;
 use Gap\Routing\Router;
 
+use Gap\Http\SiteManager;
+
 class HttpHandlerTest extends TestCase
 {
     public function testHttpHandler(): void
     {
-        $app = $this->createMock('Gap\Base\App');
-
+        //$app = $this->createMock('Gap\Base\App');
+        $app = $this->getApp();
 
         $siteManager = $this->getSiteManager();
         $router = $this->getRouter();
@@ -30,9 +32,25 @@ class HttpHandlerTest extends TestCase
         $response = $httpHandler->handle($request);
 
         $this->assertEquals(
-            ['welcome' => 'ok'],
-            json_decode($response->getContent(), true)
+            "//www.gaptree.com/a/article-zcode#?title?:?hello?end\n",
+            $response->getContent()
         );
+    }
+
+    protected function getApp()
+    {
+        $config = new \Gap\Config\Config();
+        $config->set('baseDir', __DIR__);
+        $config->set('app', [
+            'article' => [
+                'dir' => 'app/article'
+            ]
+        ]);
+
+        $dmg = $this->createMock('Gap\Database\DatabaseManager');
+        $cmg = $this->createMock('Gap\Cache\CacheManager');
+
+        return new \Gap\Base\App($config, $dmg, $cmg);
     }
 
     protected function getRequest()
@@ -48,9 +66,16 @@ class HttpHandlerTest extends TestCase
 
     protected function getSiteManager()
     {
+        /*
         $siteManager = $this->createMock('Gap\Http\SiteManager');
         $siteManager->method('getSite')
             ->will($this->returnValue('www'));
+        */
+        $siteManager = new SiteManager([
+            'www' => [
+                'host' => 'www.gaptree.com'
+            ]
+        ]);
         return $siteManager;
     }
 

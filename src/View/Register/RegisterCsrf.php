@@ -1,16 +1,24 @@
 <?php
-namespace Gap\Base\Controller\View;
+namespace Gap\Base\View\Register;
 
 use Gap\Http\Request;
 use Gap\Security\CsrfProvider;
+use Foil\Engine;
 
-class RegisterCsrf extends RegisterBase
+class RegisterCsrf implements RegisterInterface
 {
-    public function register()
+    protected $request;
+
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
+
+    public function register(Engine $engine): void
     {
         $self = $this;
 
-        $this->engine->registerFunction(
+        $engine->registerFunction(
             'csrf',
             function () use ($self) {
                 $token = $self->getCsrfToken();
@@ -18,7 +26,7 @@ class RegisterCsrf extends RegisterBase
             }
         );
 
-        $this->engine->registerFunction(
+        $engine->registerFunction(
             'csrfToken',
             function () use ($self) {
                 return $self->getCsrfToken();

@@ -54,7 +54,15 @@ class HttpHandler
             throw new \Exception("class not found: $controllerClass");
         }
 
-        $controller = new $controllerClass($this->app, $request, $route);
+        //$controller = new $controllerClass($this->app, $request, $route, $this->siteManager);
+        $controller = new $controllerClass(
+            $this->app,
+            $this->siteManager,
+            $this->router,
+            $request,
+            $route
+        );
+
         if (!method_exists($controller, $fun)) {
             throw new \Exception("method not found: $controllerClass::$fun");
         }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "383db5d1549186d437f68a4babac37d8",
+    "content-hash": "8e6c60d65a1639ae17f99d948335a556",
     "packages": [
         {
             "name": "aura/html",
@@ -386,6 +386,38 @@
                 "gap"
             ],
             "time": "2018-01-16T06:53:53+00:00"
+        },
+        {
+            "name": "gap/meta",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://project.tecposter.cn/diffusion/57/gap-php-meta.git",
+                "reference": "6bcfe87e39cd09aaa762a06ab0525f5247189187"
+            },
+            "require": {
+                "gap/database": "^1.0",
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Gap\\Meta\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "zhanjh",
+                    "email": "zhanjh@126.com"
+                }
+            ],
+            "description": "Gap Meta",
+            "homepage": "https://project.tecposter.cn/diffusion/57/",
+            "keywords": [
+                "gap"
+            ],
+            "time": "2018-01-16T06:49:53+00:00"
         },
         {
             "name": "gap/routing",

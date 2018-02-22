@@ -1,16 +1,18 @@
 <?php
 namespace Gap\Base\Controller;
 
-use Gap\Base\Controller\View\RegisterMeta;
-use Gap\Base\Controller\View\RegisterTrans;
-use Gap\Base\Controller\View\RegisterUrl;
-use Gap\Base\Controller\View\RegisterCsrf;
-use Gap\Base\Controller\View\RegisterLocale;
+use Gap\Base\View\Register\RegisterMeta;
+use Gap\Base\View\Register\RegisterTrans;
+use Gap\Base\View\Register\RegisterUrl;
+use Gap\Base\View\Register\RegisterCsrf;
+use Gap\Base\View\Register\RegisterLocale;
 use Gap\Http\Response;
+use Gap\Meta\Meta;
 
 trait ViewTrait
 {
-    private $viewEngine;
+    protected $viewEngine;
+    protected $meta;
 
     protected function getViewEngine()
     {
@@ -19,11 +21,24 @@ trait ViewTrait
         }
 
         $requestApp = $this->route->getApp();
-        $this->viewEngine = $this->app->get('viewEngine');
+
+        $baseDir = $this->config->get('baseDir');
+        if (empty($baseDir)) {
+            throw new \Exception('cannot find "baseDir" config');
+        }
+
+        $this->viewEngine = \Foil\Foil::boot([
+            'folders' => [$this->config->get('baseDir') . '/view'],
+            'autoescape' => false,
+            'ext' => 'phtml'
+        ])->engine();
+
+        $appSubDir = $this->config->get("app.{$requestApp}.dir");
+        if (empty($appSubDir)) {
+            throw new \Exception("Cannot find \"app.{$requestApp}.dir\" config");
+        }
         $this->viewEngine->addFolder(
-            $this->config->get('baseDir')
-            . '/' .$this->config->get("app.{$requestApp}.dir")
-            . '/view'
+            $baseDir . '/' . $appSubDir . '/view'
         );
 
         $this->viewEngine->useData([
@@ -33,16 +48,28 @@ trait ViewTrait
             'route' => $this->route
         ]);
 
-        $this->obj(new RegisterMeta($this->app, $this->request, $this->viewEngine))
+        (new RegisterMeta($this->getMeta()))->register($this->viewEngine);
+        (new RegisterTrans($this->app->getTranslator()))->register($this->viewEngine);
+        (new RegisterUrl(
+            $this->getSiteUrlBuilder(),
+            $this->getRouteUrlBuilder(),
+            $this->app->getLocaleManager()
+        ))->register($this->viewEngine);
+        (new RegisterCsrf($this->request))->register($this->viewEngine);
+        (new RegisterLocale($this->app->getLocaleManager()))->register($this->viewEngine);
+
+        /*
+        (new RegisterMeta($this->app, $this->request, $this->viewEngine))
             ->register();
-        $this->obj(new RegisterTrans($this->app, $this->request, $this->viewEngine))
+        (new RegisterTrans($this->app, $this->request, $this->viewEngine))
             ->register();
-        $this->obj(new RegisterUrl($this->app, $this->request, $this->viewEngine))
+        (new RegisterUrl($this->app, $this->request, $this->viewEngine))
             ->register();
-        $this->obj(new RegisterCsrf($this->app, $this->request, $this->viewEngine))
+        (new RegisterCsrf($this->app, $this->request, $this->viewEngine))
             ->register();
-        $this->obj(new RegisterLocale($this->app, $this->request, $this->viewEngine))
+        (new RegisterLocale($this->app, $this->request, $this->viewEngine))
             ->register();
+        */
 
         return $this->viewEngine;
     }
@@ -59,8 +86,19 @@ trait ViewTrait
         return new Response($this->render($tpl, $data));
     }
 
-    protected function obj($obj)
+    protected function getMeta(): ?Meta
     {
-        return $obj;
+        if ($this->meta) {
+            return $this->meta;
+        }
+
+        if ($this->config->has('meta')) {
+            $this->meta = new \Gap\Meta\Meta(
+                $this->app->getDmg()->connect($this->config->get('meta.db')),
+                $this->app->getCmg()->connect($this->config->get('meta.cache'))
+            );
+        }
+
+        return $this->meta;
     }
 }

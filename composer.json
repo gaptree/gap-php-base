@@ -22,7 +22,8 @@
         "gap/security": "^1.0",
         "gap/i18n": "^1.0",
         "gap/cache": "^1.0",
-        "gap/dto": "^1.0"
+        "gap/dto": "^1.0",
+        "gap/meta": "^1.0"
     },
     "repositories": {
         "0": {

@@ -3,7 +3,7 @@ namespace Gap\Base\Service;
 
 use Gap\Base\App;
 
-abstract class ServiceBase
+class ServiceBase
 {
     protected $app;
 
@@ -19,11 +19,11 @@ abstract class ServiceBase
 
     protected function getDmg()
     {
-        return $this->app->get('dmg');
+        return $this->app->getDmg();
     }
 
     protected function getCmg()
     {
-        return $this->app->get('cmg');
+        return $this->app->getCmg();
     }
 }
