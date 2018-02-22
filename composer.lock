@@ -271,11 +271,11 @@
         },
         {
             "name": "gap/dto",
-            "version": "1.0.1",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://project.tecposter.cn/diffusion/75/gap-php-dto.git",
-                "reference": "892adce9ba99b691246679a2801995d7d35e5043"
+                "reference": "49c629640f12a90fc7a0b50f647a6e8a277013c0"
             },
             "require": {
                 "php": ">=7.1.0"
@@ -302,7 +302,7 @@
                 "dto",
                 "gap"
             ],
-            "time": "2018-01-15T07:26:22+00:00"
+            "time": "2018-02-22T11:31:14+00:00"
         },
         {
             "name": "gap/http",

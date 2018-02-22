@@ -3,10 +3,8 @@ namespace Gap\Base\Dto;
 
 use JsonSerializable;
 
-abstract class DtoBase implements JsonSerializable
+abstract class DtoBase extends \Gap\Dto\DtoBase
 {
-    use \Gap\Dto\MainTrait;
-
     // dto not recommand
     public function get($key)
     {
