@@ -10,7 +10,7 @@ use Gap\Routing\Router;
 use Gap\Routing\Route;
 use Gap\Routing\RouteUrlBuilder;
 
-trait MainTrait
+abstract class ControllerBase
 {
     protected $app;
     protected $config;

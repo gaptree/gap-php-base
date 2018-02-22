@@ -1,7 +1,8 @@
 <?php
 namespace Gap\Base\Open;
 
-abstract class OpenBase
+use Gap\Base\Controller\ControllerBase;
+
+abstract class OpenBase extends ControllerBase
 {
-    use \Gap\Base\Controller\MainTrait;
 }

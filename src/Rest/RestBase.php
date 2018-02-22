@@ -1,7 +1,8 @@
 <?php
 namespace Gap\Base\Rest;
 
-abstract class RestBase
+use Gap\Base\Controller\ControllerBase;
+
+abstract class RestBase extends ControllerBase
 {
-    use \Gap\Base\Controller\MainTrait;
 }
