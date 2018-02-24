@@ -35,11 +35,16 @@ if (file_exists('setting/setting.php')) {
     $config->set('baseDir', getcwd());
 }
 
-$app = new \Gap\Base\App($config);
+$dmg = $config->has('db') ?
+    new \Gap\Database\DatabaseManager($config->get('db'), $config->get('server.id'))
+    :
+    null;
+$cmg = $config->has('cache') ?
+    new \Gap\Cache\CacheManager($config->get('cache'))
+    :
+    null;
 
-if ($config->get('db')) {
-    register_dmg($app);
-}
+$app = new \Gap\Base\App($config, $dmg, $cmg);
 
 $consoleHandler = new \Gap\Base\ConsoleHandler($app);
 $consoleHandler->handle($argv, $argc);

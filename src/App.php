@@ -20,8 +20,11 @@ class App
     //protected $singletons = [];
     //protected $refs = []; // reflection class & functions
 
-    public function __construct(Config $config, DataBasemanager $dmg, CacheManager $cmg)
-    {
+    public function __construct(
+        Config $config,
+        ?DataBasemanager $dmg = null,
+        ?CacheManager $cmg = null
+    ) {
         $this->config = $config;
         $this->dmg = $dmg;
         $this->cmg = $cmg;

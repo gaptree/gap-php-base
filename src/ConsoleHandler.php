@@ -24,9 +24,9 @@ class ConsoleHandler
         $commandName = $argv[1];
         $commandClass = $cmdMap[$commandName] ?? '';
         if (!$commandClass) {
-            echo "cannot find command [$commandName];\n";
-            return;
+            throw new \Exception("cannot find command [$commandName];\n");
         }
+
         obj(new $commandClass($this->app, $argv, $argc))
             ->run();
     }

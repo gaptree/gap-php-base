@@ -46,6 +46,26 @@ class HttpHandler
         return $this->callControllerAction($request, $route);
     }
 
+    public function getRequestFilterManager(): RequestFilterManager
+    {
+        if ($this->requestFilterManager) {
+            return $this->requestFilterManager;
+        }
+
+        $this->requestFilterManager = new RequestFilterManager();
+        return $this->requestFilterManager;
+    }
+
+    public function getRouteFilterManager(): RouteFilterManager
+    {
+        if ($this->routeFilterManager) {
+            return $this->routeFilterManager;
+        }
+
+        $this->routeFilterManager = new RouteFilterManager();
+        return $this->routeFilterManager;
+    }
+
     protected function callControllerAction(Request $request, Route $route): Response
     {
         list($controllerClass, $fun) = explode('@', $route->getAction());
@@ -69,25 +89,5 @@ class HttpHandler
 
         $controller->bootstrap();
         return $controller->$fun();
-    }
-
-    protected function getRequestFilterManager(): RequestFilterManager
-    {
-        if ($this->requestFilterManager) {
-            return $this->requestFilterManager;
-        }
-
-        $this->requestFilterManager = new RequestFilterManager();
-        return $this->requestFilterManager;
-    }
-
-    protected function getRouteFilterManager(): RouteFilterManager
-    {
-        if ($this->routeFilterManager) {
-            return $this->routeFilterManager;
-        }
-
-        $this->routeFilterManager = new RouteFilterManager();
-        return $this->routeFilterManager;
     }
 }
