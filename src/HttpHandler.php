@@ -5,14 +5,15 @@ use Gap\Base\App;
 
 use Gap\Routing\Route;
 use Gap\Routing\Router;
-use Gap\Routing\RouteFilterManager;
 use Gap\Routing\RouteUrlBuilder;
 
 use Gap\Http\Request;
 use Gap\Http\SiteManager;
 use Gap\Http\Session\SessionBuilder;
-use Gap\Http\RequestFilterManager;
 use Gap\Http\SiteUrlBuilder;
+
+use Gap\Base\RouteFilterManager;
+use Gap\Base\RequestFilterManager;
 
 use Symfony\Component\HttpFoundation\Response;
 
@@ -67,7 +68,7 @@ class HttpHandler
             return $this->requestFilterManager;
         }
 
-        $this->requestFilterManager = new RequestFilterManager();
+        $this->requestFilterManager = new RequestFilterManager($this);
         return $this->requestFilterManager;
     }
 
@@ -77,7 +78,7 @@ class HttpHandler
             return $this->routeFilterManager;
         }
 
-        $this->routeFilterManager = new RouteFilterManager();
+        $this->routeFilterManager = new RouteFilterManager($this);
         return $this->routeFilterManager;
     }
 
