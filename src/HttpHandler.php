@@ -6,19 +6,24 @@ use Gap\Base\App;
 use Gap\Routing\Route;
 use Gap\Routing\Router;
 use Gap\Routing\RouteFilterManager;
+use Gap\Routing\RouteUrlBuilder;
 
 use Gap\Http\Request;
 use Gap\Http\SiteManager;
 use Gap\Http\Session\SessionBuilder;
 use Gap\Http\RequestFilterManager;
+use Gap\Http\SiteUrlBuilder;
 
 use Symfony\Component\HttpFoundation\Response;
 
 class HttpHandler
 {
     protected $app;
-    protected $siteManager;
     protected $router;
+
+    protected $siteManager;
+    protected $siteUrlBuilder;
+    protected $routeUrlBuilder;
 
     protected $requestFilterManager;
     protected $routeFilterManager;
@@ -46,6 +51,16 @@ class HttpHandler
         return $this->callControllerAction($request, $route);
     }
 
+    public function getApp(): App
+    {
+        return $this->app;
+    }
+
+    public function getRouter(): Router
+    {
+        return $this->router;
+    }
+
     public function getRequestFilterManager(): RequestFilterManager
     {
         if ($this->requestFilterManager) {
@@ -66,6 +81,34 @@ class HttpHandler
         return $this->routeFilterManager;
     }
 
+    public function getSiteManager(): SiteManager
+    {
+        return $this->siteManager;
+    }
+
+    public function getSiteUrlBuilder(): SiteUrlBuilder
+    {
+        if ($this->siteUrlBuilder) {
+            return $this->siteUrlBuilder;
+        }
+
+        $this->siteUrlBuilder = new SiteUrlBuilder($this->getSiteManager());
+        return $this->siteUrlBuilder;
+    }
+
+    public function getRouteUrlBuilder(): RouteUrlBuilder
+    {
+        if ($this->routeUrlBuilder) {
+            return $this->routeUrlBuilder;
+        }
+
+        $this->routeUrlBuilder = new RouteUrlBuilder($this->router, $this->siteUrlBuilder);
+        return $this->routeUrlBuilder;
+    }
+
+    //
+    // protected
+    //
     protected function callControllerAction(Request $request, Route $route): Response
     {
         list($controllerClass, $fun) = explode('@', $route->getAction());
@@ -76,9 +119,7 @@ class HttpHandler
 
         //$controller = new $controllerClass($this->app, $request, $route, $this->siteManager);
         $controller = new $controllerClass(
-            $this->app,
-            $this->siteManager,
-            $this->router,
+            $this,
             $request,
             $route
         );

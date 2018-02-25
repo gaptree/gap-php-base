@@ -2,6 +2,9 @@
 namespace Gap\Base\Controller;
 
 use Gap\Base\App;
+use Gap\Base\HttpHandler;
+use Gap\Config\Config;
+
 use Gap\Http\Request;
 use Gap\Http\SiteManager;
 use Gap\Http\SiteUrlBuilder;
@@ -12,38 +15,65 @@ use Gap\Routing\RouteUrlBuilder;
 
 abstract class ControllerBase
 {
+    protected $handler;
     protected $app;
     protected $config;
-    protected $siteManager;
-    protected $router;
 
     protected $request;
     protected $route;
 
     protected $params = [];
 
-    protected $siteUrlBuilder;
-    protected $routeUrlBuilder;
-
     public function __construct(
-        App $app,
-        SiteManager $siteManager,
-        Router $router,
+        HttpHandler $handler,
         Request $request,
         Route $route
     ) {
-        $this->app = $app;
-        $this->config = $app->getConfig();
-        $this->siteManager = $siteManager;
-        $this->router = $router;
+        $this->app = $handler->getApp();
+        $this->handler = $handler;
+        $this->config = $this->app->getConfig();
 
         $this->request = $request;
         $this->route = $route;
     }
 
-    public function getApp(): App
+    public function bootstrap(): void
+    {
+    }
+
+    protected function getApp(): App
     {
         return $this->app;
+    }
+
+    protected function getConfig(): Config
+    {
+        return $this->config;
+    }
+
+    protected function getParam(string $key): string
+    {
+        return $this->route->getParam($key);
+    }
+
+    protected function getSiteManager(): SiteManager
+    {
+        return $this->handler->getSiteManager();
+    }
+
+    protected function getSiteUrlBuilder(): SiteUrlBuilder
+    {
+        return $this->handler->getSiteUrlBuilder();
+    }
+
+    protected function getRouteUrlBuilder(): RouteUrlBuilder
+    {
+        return $this->handler->getRouteUrlBuilder();
+    }
+
+    protected function getRouter(): Router
+    {
+        return $this->handler->getRouter();
     }
 
     public function getRequest(): Request
@@ -51,42 +81,8 @@ abstract class ControllerBase
         return $this->request;
     }
 
-    public function getParam(string $key): string
+    protected function getRoute(): Route
     {
-        return $this->route->getParam($key);
-    }
-
-    public function bootstrap(): void
-    {
-    }
-
-    protected function getSiteUrlBuilder(): SiteUrlBuilder
-    {
-        if ($this->siteUrlBuilder) {
-            return $this->siteUrlBuilder;
-        }
-
-        $this->siteUrlBuilder = new SiteUrlBuilder($this->getSiteManager());
-        return $this->siteUrlBuilder;
-    }
-
-    protected function getRouteUrlBuilder(): RouteUrlBuilder
-    {
-        if ($this->routeUrlBuilder) {
-            return $this->routeUrlBuilder;
-        }
-
-        $this->routeUrlBuilder = new RouteUrlBuilder($this->router, $this->siteUrlBuilder);
-        return $this->routeUrlBuilder;
-    }
-
-    protected function getSiteManager(): SiteManager
-    {
-        return $this->siteManager;
-    }
-
-    protected function getRouter(): Router
-    {
-        return $this->router;
+        return $this->route;
     }
 }
