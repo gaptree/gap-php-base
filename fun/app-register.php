@@ -49,7 +49,7 @@ function register_site_manager(App $app)
     $config = $app->getConfig();
     $app->set(
         'siteManager',
-        \Gap\Routing\SiteManager::class,
+        \Gap\Http\SiteManager::class,
         [$config->get('site')]
     );
 }
@@ -57,7 +57,7 @@ function register_site_manager(App $app)
 function register_site_url_builder(App $app)
 {
     $app->set('siteUrlBuilder', function () use ($app) {
-        return new \Gap\Routing\SiteUrlBuilder($app->get('siteManager'));
+        return new \Gap\Http\SiteUrlBuilder($app->get('siteManager'));
     });
 }
 
