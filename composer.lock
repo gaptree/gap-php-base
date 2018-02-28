@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b79a7bd5c9ba6092eaa20b1d1be2064e",
+    "content-hash": "02c620939305d4cf7db04b472eab8e81",
     "packages": [
         {
             "name": "aura/html",
@@ -209,11 +209,17 @@
         },
         {
             "name": "gap/config",
-            "version": "v2.0.2",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/gaptree/gap-php-config.git",
-                "reference": "54b2e1d664e3ec8466e6a889b168e4f2a5708dc5"
+                "reference": "d0397ede47eb363692b4afde68dd0505e1e25309"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/gaptree/gap-php-config/d0397ede47eb363692b4afde68dd0505e1e25309.zip",
+                "reference": "d0397ede47eb363692b4afde68dd0505e1e25309",
+                "shasum": ""
             },
             "require": {
                 "php": ">=7.1.0"
@@ -224,31 +230,7 @@
                     "Gap\\Config\\": "src"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "phpunit\\Gap\\Config\\": "phpunit"
-                }
-            },
-            "scripts": {
-                "test": [
-                    "@phpcs",
-                    "@phpmd",
-                    "@phpstan",
-                    "@phpunit"
-                ],
-                "phpunit": [
-                    "phpunit"
-                ],
-                "phpstan": [
-                    "phpstan analyse -l 7 -c phpstan.neon phpunit src"
-                ],
-                "phpcs": [
-                    "phpcs --report=full --standard=psr2 --extensions=php src phpunit"
-                ],
-                "phpmd": [
-                    "phpmd src,phpunit text cleancode,codesize,controversial,design,naming,unusedcode"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "authors": [
                 {
                     "name": "zhanjh",
@@ -260,7 +242,7 @@
             "keywords": [
                 "gap"
             ],
-            "time": "2018-02-28T08:32:44+00:00"
+            "time": "2017-12-03T12:56:40+00:00"
         },
         {
             "name": "gap/database",
