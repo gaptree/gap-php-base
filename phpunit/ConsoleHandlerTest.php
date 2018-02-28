@@ -16,8 +16,7 @@ class ConsoleHandlerTest extends TestCase
         $this->expectOutputString("Useage: \n"
             . "  gap COMMAND [options]\n"
             . "  COMMAND:\n"
-            . "    case => phpunit\Gap\Base\Cmd\CaseCmd \n"
-            . "    init => Gap\Util\Coder\Cmd\InitCmd \n");
+            . "    case => phpunit\Gap\Base\Cmd\CaseCmd \n");
     }
 
     public function testCmd(): void
@@ -42,14 +41,14 @@ class ConsoleHandlerTest extends TestCase
 
     protected function getApp()
     {
-        $config = new \Gap\Config\Config();
-        $config->set('baseDir', __DIR__);
-        $config->set('app', [
-            'article' => [
-                'dir' => 'app/article'
+        $config = new \Gap\Config\Config([
+            'baseDir' => __DIR__,
+            'app' => [
+                'article' => [
+                    'dir' => 'app/article'
+                ]
             ]
         ]);
-
         return new \Gap\Base\App($config);
     }
 }

@@ -45,7 +45,7 @@ class ConsoleHandler
 
     protected function buildCmdMap()
     {
-        $cmdFile = $this->app->getConfig()->get('baseDir')
+        $cmdFile = $this->app->getConfig()->str('baseDir')
             . '/setting/cmd/cmd.php';
         $cmdMap = [];
         if (file_exists($cmdFile)) {

@@ -72,7 +72,8 @@ class App
             return $this->localeManager;
         }
 
-        $localeOpts = $this->config->get('i18n.locale');
+        $localeOpts = $this->config
+            ->config('i18n')->arr('locale');
         if (empty($localeOpts)) {
             return null;
         }
@@ -89,8 +90,8 @@ class App
 
         if ($this->config->has('i18n')) {
             $this->translator = new Translator(
-                $this->getDmg()->connect($this->config->get('i18n.db')),
-                $this->getCmg()->connect($this->config->get('i18n.cache'))
+                $this->getDmg()->connect($this->getConfig()->config('i18n')->arr('db')),
+                $this->getCmg()->connect($this->getConfig()->config('i18n')->arr('cache'))
             );
         }
         return $this->translator;

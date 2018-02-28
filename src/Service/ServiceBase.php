@@ -2,6 +2,7 @@
 namespace Gap\Base\Service;
 
 use Gap\Base\App;
+use Gap\Config\Config;
 
 class ServiceBase
 {
@@ -12,7 +13,7 @@ class ServiceBase
         $this->app = $app;
     }
 
-    protected function getConfig()
+    protected function getConfig(): Config
     {
         return $this->app->getConfig();
     }

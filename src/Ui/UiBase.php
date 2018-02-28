@@ -23,18 +23,20 @@ abstract class UiBase extends ControllerBase
 
         $requestApp = $this->route->getApp();
 
-        $baseDir = $this->config->get('baseDir');
+        $config = $this->getConfig();
+
+        $baseDir = $config->str('baseDir');
         if (empty($baseDir)) {
             throw new \Exception('cannot find "baseDir" config');
         }
 
         $this->viewEngine = \Foil\Foil::boot([
-            'folders' => [$this->config->get('baseDir') . '/view'],
+            'folders' => [$baseDir . '/view'],
             'autoescape' => false,
             'ext' => 'phtml'
         ])->engine();
 
-        $appSubDir = $this->config->get("app.{$requestApp}.dir");
+        $appSubDir = $config->config('app')->config($requestApp)->str('dir');
         if (empty($appSubDir)) {
             throw new \Exception("Cannot find \"app.{$requestApp}.dir\" config");
         }
@@ -82,8 +84,8 @@ abstract class UiBase extends ControllerBase
 
         if ($this->config->has('meta')) {
             $this->meta = new \Gap\Meta\Meta(
-                $this->app->getDmg()->connect($this->config->get('meta.db')),
-                $this->app->getCmg()->connect($this->config->get('meta.cache'))
+                $this->app->getDmg()->connect($this->config->config('meta')->arr('db')),
+                $this->app->getCmg()->connect($this->config->config('meta')->arr('cache'))
             );
         }
 

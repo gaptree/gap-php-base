@@ -35,7 +35,7 @@ abstract class CmdBase
 
         $this->buildOpts();
 
-        $this->baseDir = $this->app->getConfig()->get('baseDir');
+        $this->baseDir = $this->app->getConfig()->str('baseDir');
         $this->isDev = $this->options['dev'] ?? false;
     }
 

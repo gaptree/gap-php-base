@@ -39,11 +39,12 @@ class HttpHandlerTest extends TestCase
 
     protected function getApp()
     {
-        $config = new \Gap\Config\Config();
-        $config->set('baseDir', __DIR__);
-        $config->set('app', [
-            'article' => [
-                'dir' => 'app/article'
+        $config = new \Gap\Config\Config([
+            'baseDir' => __DIR__,
+            'app' => [
+                'article' => [
+                    'dir' => 'app/article'
+                ]
             ]
         ]);
 
