@@ -15,7 +15,7 @@
     "require": {
         "php": ">=7.1.0",
         "gap/database": "^1.0",
-        "gap/config": "^1.0",
+        "gap/config": "^2.0",
         "gap/http": "^1.0",
         "gap/routing": "^1.0",
         "foil/foil": "^0.6.7",
