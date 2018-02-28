@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8e6c60d65a1639ae17f99d948335a556",
+    "content-hash": "6e8b8d44a769f479737db2f3d1da27bb",
     "packages": [
         {
             "name": "aura/html",
@@ -209,11 +209,17 @@
         },
         {
             "name": "gap/config",
-            "version": "1.0.0",
+            "version": "v2.0.2",
             "source": {
                 "type": "git",
-                "url": "https://project.tecposter.cn/diffusion/54/gap-php-config.git",
-                "reference": "d0397ede47eb363692b4afde68dd0505e1e25309"
+                "url": "https://github.com/gaptree/gap-php-config.git",
+                "reference": "54b2e1d664e3ec8466e6a889b168e4f2a5708dc5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/gaptree/gap-php-config/54b2e1d664e3ec8466e6a889b168e4f2a5708dc5.zip",
+                "reference": "54b2e1d664e3ec8466e6a889b168e4f2a5708dc5",
+                "shasum": ""
             },
             "require": {
                 "php": ">=7.1.0"
@@ -236,7 +242,7 @@
             "keywords": [
                 "gap"
             ],
-            "time": "2017-12-03T12:56:40+00:00"
+            "time": "2018-02-28T08:32:44+00:00"
         },
         {
             "name": "gap/database",
@@ -271,11 +277,11 @@
         },
         {
             "name": "gap/dto",
-            "version": "v1.0.2",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://project.tecposter.cn/diffusion/75/gap-php-dto.git",
-                "reference": "49c629640f12a90fc7a0b50f647a6e8a277013c0"
+                "reference": "8024f1d8274cdf38ec2d49243ddd0ad00c7a8a8a"
             },
             "require": {
                 "php": ">=7.1.0"
@@ -302,7 +308,7 @@
                 "dto",
                 "gap"
             ],
-            "time": "2018-02-22T11:31:14+00:00"
+            "time": "2018-02-24T08:30:18+00:00"
         },
         {
             "name": "gap/http",
