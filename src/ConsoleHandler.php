@@ -51,7 +51,6 @@ class ConsoleHandler
         if (file_exists($cmdFile)) {
             $cmdMap = require $cmdFile;
         }
-        $cmdMap['init'] = 'Gap\Util\Coder\Cmd\InitCmd';
         return $cmdMap;
     }
 }
