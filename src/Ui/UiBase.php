@@ -85,8 +85,8 @@ abstract class UiBase extends ControllerBase
 
         if ($this->config->has('meta')) {
             $this->meta = new \Gap\Meta\Meta(
-                $this->app->getDmg()->connect($this->config->config('meta')->arr('db')),
-                $this->app->getCmg()->connect($this->config->config('meta')->arr('cache'))
+                $this->app->getDmg()->connect($this->config->config('meta')->str('db')),
+                $this->app->getCmg()->connect($this->config->config('meta')->str('cache'))
             );
         }
 
