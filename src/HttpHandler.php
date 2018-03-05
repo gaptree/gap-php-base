@@ -102,7 +102,7 @@ class HttpHandler
             return $this->routeUrlBuilder;
         }
 
-        $this->routeUrlBuilder = new RouteUrlBuilder($this->router, $this->siteUrlBuilder);
+        $this->routeUrlBuilder = new RouteUrlBuilder($this->router, $this->getSiteUrlBuilder());
         return $this->routeUrlBuilder;
     }
 
