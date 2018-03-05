@@ -90,8 +90,8 @@ class App
 
         if ($this->config->has('i18n')) {
             $this->translator = new Translator(
-                $this->getDmg()->connect($this->getConfig()->config('i18n')->arr('db')),
-                $this->getCmg()->connect($this->getConfig()->config('i18n')->arr('cache'))
+                $this->getDmg()->connect($this->getConfig()->config('i18n')->str('db')),
+                $this->getCmg()->connect($this->getConfig()->config('i18n')->str('cache'))
             );
         }
         return $this->translator;
