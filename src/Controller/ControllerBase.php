@@ -76,7 +76,7 @@ abstract class ControllerBase
         return $this->handler->getRouter();
     }
 
-    public function getRequest(): Request
+    protected function getRequest(): Request
     {
         return $this->request;
     }

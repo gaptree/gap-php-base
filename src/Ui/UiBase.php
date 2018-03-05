@@ -9,13 +9,14 @@ use Gap\Base\View\Register\RegisterCsrf;
 use Gap\Base\View\Register\RegisterLocale;
 use Gap\Http\Response;
 use Gap\Meta\Meta;
+use Foil\Engine;
 
 abstract class UiBase extends ControllerBase
 {
     protected $viewEngine;
     protected $meta;
 
-    protected function getViewEngine()
+    protected function getViewEngine(): Engine
     {
         if ($this->viewEngine) {
             return $this->viewEngine;
@@ -64,14 +65,14 @@ abstract class UiBase extends ControllerBase
         return $this->viewEngine;
     }
 
-    protected function render($tpl, $data)
+    protected function render(string $tpl, array $data): string
     {
         $viewEngine = $this->getViewEngine();
 
         return $viewEngine->render($tpl, $data);
     }
 
-    protected function view($tpl, $data = [])
+    protected function view(string $tpl, array $data = []): Response
     {
         return new Response($this->render($tpl, $data));
     }
