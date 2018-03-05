@@ -9,7 +9,6 @@ use Gap\Routing\RouteUrlBuilder;
 
 use Gap\Http\Request;
 use Gap\Http\SiteManager;
-use Gap\Http\Session\SessionBuilder;
 use Gap\Http\SiteUrlBuilder;
 
 use Gap\Base\RouteFilterManager;
