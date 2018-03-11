@@ -51,10 +51,11 @@ abstract class UiBase extends ControllerBase
             'app' => $this->app,
             'config' => $this->app->getConfig(),
             'request' => $this->request,
-            'route' => $this->route
+            'route' => $this->route,
+            'meta' => $this->getMeta()
         ]);
 
-        (new RegisterMeta($this->getMeta()))->register($this->viewEngine);
+        //(new RegisterMeta($this->getMeta()))->register($this->viewEngine);
         (new RegisterTrans($this->app->getTranslator()))->register($this->viewEngine);
         (new RegisterUrl(
             $this->getSiteUrlBuilder(),
