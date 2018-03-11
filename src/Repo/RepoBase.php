@@ -1,9 +1,7 @@
 <?php
 namespace Gap\Base\Repo;
 
-use Gap\Database\DatabaseManager;
-use Gap\Database\DataSet;
-use Gap\Database\Contract\SqlBuilder\SelectSqlBuilderInterface;
+use Gap\Db\DbManagerInterface;
 
 abstract class RepoBase
 {
@@ -11,7 +9,7 @@ abstract class RepoBase
     protected $cnnName;
     protected $cnn;
 
-    public function __construct(DatabaseManager $dmg)
+    public function __construct(DbManagerInterface $dmg)
     {
         $this->dmg = $dmg;
 
@@ -26,10 +24,5 @@ abstract class RepoBase
 
     public function startup()
     {
-    }
-
-    protected function dataSet(SelectSqlBuilderInterface $ssb, $dtoClass)
-    {
-        return new DataSet($ssb, $dtoClass);
     }
 }

@@ -2,11 +2,14 @@
 namespace Gap\Base;
 
 use Gap\Config\Config;
-use Gap\Database\DatabaseManager;
+//use Gap\Database\DatabaseManager;
+use Gap\Db\DbManagerInterface;
 use Gap\Cache\CacheManager;
 
 use Gap\I18n\Locale\LocaleManager;
 use Gap\I18n\Translator\Translator;
+use Gap\I18n\Translator\Repo\TranslatorRepoInterface;
+use Gap\I18n\Translator\Repo\TranslatorRepo;
 
 class App
 {
@@ -22,7 +25,7 @@ class App
 
     public function __construct(
         Config $config,
-        ?DataBasemanager $dmg = null,
+        ?DbManagerInterface $dmg = null,
         ?CacheManager $cmg = null
     ) {
         $this->config = $config;
@@ -35,7 +38,7 @@ class App
         return $this->config;
     }
 
-    public function getDmg(): DatabaseManager
+    public function getDmg(): DbManagerInterface
     {
         return $this->dmg;
         /*
@@ -90,13 +93,22 @@ class App
 
         if ($this->config->has('i18n')) {
             $this->translator = new Translator(
-                $this->getDmg()->connect($this->getConfig()->config('i18n')->str('db')),
+                $this->getTranslatorRepo(),
                 $this->getCmg()->connect($this->getConfig()->config('i18n')->str('cache'))
             );
         }
         return $this->translator;
     }
 
+    protected function getTranslatorRepo(): TranslatorRepoInterface
+    {
+        $cnn = $this->getDmg()->connect($this->getConfig()->config('i18n')->str('db'));
+        if ($repoClass = $this->config->config('i18n')->str('translatorRepo')) {
+            return new $repoClass($cnn);
+        }
+
+        return new TranslatorRepo($cnn);
+    }
 
     /*
     public function set($key, $ref, $args = [])

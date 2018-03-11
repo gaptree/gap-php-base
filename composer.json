@@ -14,26 +14,16 @@
     ],
     "require": {
         "php": ">=7.1.0",
-        "gap/database": "^1.0",
+        "gap/db": "^1.0",
         "gap/config": "^2.0",
         "gap/http": "^1.0",
         "gap/routing": "^1.0",
         "foil/foil": "^0.6.7",
         "gap/security": "^1.0",
-        "gap/i18n": "^1.0",
+        "gap/i18n": "^2.0",
         "gap/cache": "^1.0",
         "gap/dto": "^1.0",
-        "gap/meta": "^1.0"
-    },
-    "repositories": {
-        "0": {
-            "type": "git",
-            "url": "https://project.tecposter.cn/diffusion/61/gap-php-http.git"
-        },
-        "1": {
-            "type": "git",
-            "url": "https://project.tecposter.cn/diffusion/51/gap-php-routing.git"
-        }
+        "gap/meta": "^2.0"
     },
     "autoload": {
         "psr-4": {

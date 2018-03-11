@@ -48,7 +48,7 @@ class HttpHandlerTest extends TestCase
             ]
         ]);
 
-        $dmg = $this->createMock('Gap\Database\DatabaseManager');
+        $dmg = $this->createMock('Gap\Db\DbManagerInterface');
         $cmg = $this->createMock('Gap\Cache\CacheManager');
 
         return new \Gap\Base\App($config, $dmg, $cmg);

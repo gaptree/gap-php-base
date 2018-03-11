@@ -9,6 +9,8 @@ use Gap\Base\View\Register\RegisterCsrf;
 use Gap\Base\View\Register\RegisterLocale;
 use Gap\Http\Response;
 use Gap\Meta\Meta;
+use Gap\Meta\Repo\MetaRepoInterface;
+use Gap\Meta\Repo\MetaRepo;
 use Foil\Engine;
 
 abstract class UiBase extends ControllerBase
@@ -85,11 +87,21 @@ abstract class UiBase extends ControllerBase
 
         if ($this->config->has('meta')) {
             $this->meta = new \Gap\Meta\Meta(
-                $this->app->getDmg()->connect($this->config->config('meta')->str('db')),
+                $this->getMetaRepo(),
                 $this->app->getCmg()->connect($this->config->config('meta')->str('cache'))
             );
         }
 
         return $this->meta;
+    }
+
+    protected function getMetaRepo(): MetaRepoInterface
+    {
+        $cnn = $this->app->getDmg()->connect($this->getConfig()->config('meta')->str('db'));
+        if ($repoClass = $this->config->config('meta')->str('repo')) {
+            return new $repoClass($cnn);
+        }
+
+        return new MetaRepo($cnn);
     }
 }

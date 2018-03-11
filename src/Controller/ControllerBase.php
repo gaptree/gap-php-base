@@ -12,6 +12,7 @@ use Gap\Http\SiteUrlBuilder;
 use Gap\Routing\Router;
 use Gap\Routing\Route;
 use Gap\Routing\RouteUrlBuilder;
+use Gap\I18n\Translator\Translator;
 
 abstract class ControllerBase
 {
@@ -84,5 +85,10 @@ abstract class ControllerBase
     protected function getRoute(): Route
     {
         return $this->route;
+    }
+
+    protected function getTranslator(): Translator
+    {
+        return $this->app->getTranslator();
     }
 }
