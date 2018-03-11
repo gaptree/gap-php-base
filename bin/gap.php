@@ -35,10 +35,16 @@ if (file_exists('setting')) {
     ]);
 }
 
-$dmg = $config->has('db') ?
-    new \Gap\Database\DatabaseManager($config->arr('db'), $config->config('server')->str('id'))
-    :
-    null;
+$dmg = null;
+if ($dbArr = $config->arr('db')) {
+    $legacy = $dbArr['legacy'] ?? false;
+    $serverId = $config->config('server')->str('id');
+    $dmg = $legacy ?
+        new \Gap\Database\DatabaseManager($dbArr, $serverId)
+        :
+        new \Gap\Db\DbManager($dbArr, $serverId);
+}
+
 $cmg = $config->has('cache') ?
     new \Gap\Cache\CacheManager($config->arr('cache'))
     :
