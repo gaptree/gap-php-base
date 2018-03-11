@@ -31,8 +31,15 @@ class RegisterTrans implements RegisterInterface
 
         $engine->registerFunction(
             'trans',
-            function ($str, $vars = [], $localeKey = '') use ($trans) {
-                return $trans->get($str, $vars, $localeKey);
+            function (string $str, string ...$vars) use ($trans) {
+                return $trans->get($str, ...$vars);
+            }
+        );
+
+        $engine->registerFunction(
+            'localeTrans',
+            function (string $localeKey, string $str, string ...$vars) use ($trans) {
+                return $trans->localeGet($localeKey, $str, ...$vars);
             }
         );
     }
