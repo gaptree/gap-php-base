@@ -22,7 +22,8 @@
         "gap/i18n": "^2.0",
         "gap/cache": "^1.1",
         "gap/dto": "^1.0",
-        "gap/meta": "^2.0"
+        "gap/meta": "^2.0",
+        "gap/security": "^1.0"
     },
     "autoload": {
         "psr-4": {

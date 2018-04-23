@@ -1,7 +1,7 @@
 <?php
 namespace Gap\Base\Repo;
 
-use Gap\Db\DbManagerInterface;
+use Gap\Db\Contract\DbManagerInterface;
 
 abstract class RepoBase
 {

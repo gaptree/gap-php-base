@@ -3,7 +3,7 @@ namespace Gap\Base;
 
 use Gap\Config\Config;
 //use Gap\Database\DatabaseManager;
-use Gap\Db\DbManagerInterface;
+use Gap\Db\Contract\DbManagerInterface;
 use Gap\Cache\CacheManager;
 
 use Gap\I18n\Locale\LocaleManager;

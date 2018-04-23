@@ -32,7 +32,7 @@ class HttpHandlerTest extends TestCase
         $response = $httpHandler->handle($request);
 
         $this->assertEquals(
-            "//www.gaptree.com/a/article-zcode#?title?:?hello?end\n",
+            "//www.gaptree.com/a/article-zcode:?hello?end\n",
             $response->getContent()
         );
     }
@@ -48,7 +48,7 @@ class HttpHandlerTest extends TestCase
             ]
         ]);
 
-        $dmg = $this->createMock('Gap\Db\DbManagerInterface');
+        $dmg = $this->createMock('Gap\Db\Contract\DbManagerInterface');
         $cmg = $this->createMock('Gap\Cache\CacheManager');
 
         return new \Gap\Base\App($config, $dmg, $cmg);
