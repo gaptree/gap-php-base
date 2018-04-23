@@ -14,14 +14,13 @@
     ],
     "require": {
         "php": ">=7.1.0",
-        "gap/db": "^1.0",
+        "foil/foil": "^0.6.7",
+        "gap/db": "^2.0",
         "gap/config": "^2.0",
         "gap/http": "^1.0",
         "gap/routing": "^1.0",
-        "foil/foil": "^0.6.7",
-        "gap/security": "^1.0",
         "gap/i18n": "^2.0",
-        "gap/cache": "^1.0",
+        "gap/cache": "^1.1",
         "gap/dto": "^1.0",
         "gap/meta": "^2.0"
     },
