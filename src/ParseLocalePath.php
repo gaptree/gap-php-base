@@ -2,29 +2,30 @@
 namespace Gap\Base;
 
 use Gap\I18n\Locale\LocaleManager;
-use Gap\Http\Request;
 use Gap\Base\Exception\NoLocaleException;
 
 class ParseLocalePath
 {
-    protected $localeManager;
+    protected $localeManager = null;
+    protected $defaultLocaleKey = 'zh-cn';
 
     public function __construct(?LocaleManager $localeManager = null)
     {
-        $this->localeManager = $localeManager;
+        if ($localeManager) {
+            $this->localeManager = $localeManager;
+            $this->defaultLocaleKey = $localeManager->getDefaultLocaleKey();
+        }
     }
 
-    public function parse(Request $request): string
+    public function parse(string $pathinfo): array
     {
-        $pathinfo = $request->getPathInfo();
         if (empty($this->localeManager)) {
-            return $pathinfo;
+            return [$this->defaultLocaleKey, $pathinfo];
         }
 
         $localeManager = $this->localeManager;
         if ($localeManager->getMode() !== 'path') {
-            $localeManager->setLocaleKey($localeManager->getDefaultLocaleKey());
-            return $pathinfo;
+            return [$this->defaultLocaleKey, $pathinfo];
         }
 
         if ($pathinfo === '/') {
@@ -37,8 +38,8 @@ class ParseLocalePath
             if (!$localeManager->isAvailableLocaleKey($path)) {
                 throw new \Exception('error request');
             }
-            $localeManager->setLocaleKey($path);
-            return '/';
+            //$localeManager->setLocaleKey($path);
+            return [$path, '/'];
         }
 
         $localeKey = substr($path, 0, $pos);
@@ -47,7 +48,7 @@ class ParseLocalePath
         }
 
         $path = substr($path, $pos);
-        $localeManager->setLocaleKey($localeKey);
-        return $path;
+        //$localeManager->setLocaleKey($localeKey);
+        return [$localeKey, $path];
     }
 }

@@ -41,10 +41,20 @@ class HttpHandler
     public function handle(Request $request): Response
     {
         $this->getRequestFilterManager()->filter($request);
+        list($site, $requestPath) = $this->siteManager->parse(
+            $request->getHttpHost() . $request->getPathInfo()
+        );
+
+        $localeManager = $this->app->getLocaleManager();
+        list($localeKey, $path) = (new ParseLocalePath($localeManager))->parse($requestPath);
+        if ($localeManager) {
+            $localeManager->setLocaleKey($localeKey);
+        }
+
         $route = $this->router->dispatch(
-            $this->siteManager->getSite($request->getHttpHost()),
+            $site,
             $request->getMethod(),
-            (new ParseLocalePath($this->app->getLocaleManager()))->parse($request)
+            $path
         );
         $this->getRouteFilterManager()->filter($request, $route);
 
