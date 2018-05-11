@@ -6,15 +6,13 @@ use Gap\Http\JsonResponse;
 
 abstract class OpenBase extends ControllerBase
 {
-    public function json(\JsonSerializable $obj): JsonResponse
+    public function json($data): JsonResponse
     {
-        return new JsonResponse($obj);
+        return new JsonResponse($data);
     }
 
-    public function errorJson(\JsonSerializable $obj): JsonResponse
+    public function errorJson($data): JsonResponse
     {
-        $response = new JsonResponse($obj);
-        $response->setStatusCode(JsonResponse::HTTP_BAD_REQUEST);
-        return $response;
+        return new JsonResponse($data, JsonResponse::HTTP_BAD_REQUEST);
     }
 }
