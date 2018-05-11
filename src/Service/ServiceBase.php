@@ -7,6 +7,7 @@ use Gap\Config\Config;
 class ServiceBase
 {
     protected $app;
+    protected $cacheName = 'default';
 
     public function __construct(App $app)
     {
@@ -26,5 +27,15 @@ class ServiceBase
     protected function getCmg()
     {
         return $this->app->getCmg();
+    }
+
+    protected function getCache()
+    {
+        return $this->getCmg()->connect($this->cacheName);
+    }
+
+    protected function getApp(): App
+    {
+        return $this->app;
     }
 }
