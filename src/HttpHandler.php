@@ -40,6 +40,12 @@ class HttpHandler
 
     public function handle(Request $request): Response
     {
+        if ($request->getMethod() === "OPTIONS") {
+            // todo
+            // https://medium.com/@neo/handling-xmlhttprequest-options-pre-flight-request-in-laravel-a4c4322051b9
+            return new Response('');
+        }
+
         $this->getRequestFilterManager()->filter($request);
         list($site, $requestPath) = $this->siteManager->parse(
             $request->getHttpHost() . $request->getPathInfo()
