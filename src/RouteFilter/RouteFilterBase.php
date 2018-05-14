@@ -32,5 +32,15 @@ abstract class RouteFilterBase
         return $this->httpHandler->getApp();
     }
 
+    protected function getRoute(): Route
+    {
+        return $this->route;
+    }
+
+    protected function getRequest(): Request
+    {
+        return $this->request;
+    }
+
     abstract public function filter();
 }
