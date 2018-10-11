@@ -8,7 +8,7 @@ use Gap\Routing\RouteCollection;
 use Gap\Routing\RouteCollectionLoader;
 use Gap\Routing\Router;
 
-use Gap\Http\SiteManager;
+use Gap\Routing\SiteManager;
 
 class HttpHandlerTest extends TestCase
 {

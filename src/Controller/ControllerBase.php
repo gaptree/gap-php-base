@@ -6,8 +6,8 @@ use Gap\Base\HttpHandler;
 use Gap\Config\Config;
 
 use Gap\Http\Request;
-use Gap\Http\SiteManager;
-use Gap\Http\SiteUrlBuilder;
+use Gap\Routing\SiteManager;
+use Gap\Routing\SiteUrlBuilder;
 
 use Gap\Routing\Router;
 use Gap\Routing\Route;

@@ -1,7 +1,7 @@
 <?php
 namespace Gap\Base\View\Register;
 
-use Gap\Http\SiteUrlBuilder;
+use Gap\Routing\SiteUrlBuilder;
 use Gap\Routing\RouteUrlBuilder;
 use Gap\I18n\Locale\LocaleManager;
 use Foil\Engine;

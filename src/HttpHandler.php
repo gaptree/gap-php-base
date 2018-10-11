@@ -8,8 +8,9 @@ use Gap\Routing\Router;
 use Gap\Routing\RouteUrlBuilder;
 
 use Gap\Http\Request;
-use Gap\Http\SiteManager;
-use Gap\Http\SiteUrlBuilder;
+
+use Gap\Routing\SiteManager;
+use Gap\Routing\SiteUrlBuilder;
 
 use Gap\Base\RouteFilterManager;
 use Gap\Base\RequestFilterManager;
