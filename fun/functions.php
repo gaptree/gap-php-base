@@ -16,6 +16,16 @@ function prop($arr, $key, $default = '')
     return isset($arr[$key]) ? $arr[$key] : $default;
 }
 
+function uuid(): string
+{
+    // http://www.seanbehan.com/how-to-generate-a-uuid-in-php
+    // http://php.net/manual/en/function.uniqid.php
+    $data = random_bytes(16);
+    $data[6] = chr(ord($data[6]) & 0x0f | 0x40);
+    $data[8] = chr(ord($data[8]) & 0x3f | 0x80);
+    return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
+}
+
 /*
 function obj($object)
 {
