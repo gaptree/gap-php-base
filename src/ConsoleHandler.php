@@ -27,7 +27,7 @@ class ConsoleHandler
             throw new \Exception("cannot find command [$commandName];\n");
         }
 
-        obj(new $commandClass($this->app, $argv, $argc))
+        (new $commandClass($this->app, $argv, $argc))
             ->run();
     }
 

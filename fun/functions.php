@@ -16,6 +16,7 @@ function prop($arr, $key, $default = '')
     return isset($arr[$key]) ? $arr[$key] : $default;
 }
 
+/*
 function obj($object)
 {
     return $object;
@@ -59,3 +60,4 @@ function script_json($obj)
         . '</script>'
         . '<div class="data-rendering"></div>';
 }
+ */
