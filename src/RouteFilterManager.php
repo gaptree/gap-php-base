@@ -17,7 +17,12 @@ class RouteFilterManager
 
     public function filter(Request $request, $route)
     {
-        foreach ($this->filters as $filter) {
+        foreach ($route->getFilters() as $filterName) {
+            $filter = $this->filters[$filterName] ?? null;
+            if (!$filter) {
+                throw new \Exception("Cannot find filter [$filterName]");
+            }
+
             $filter->setHttpHandler($this->httpHandler);
             $filter->setRequest($request);
             $filter->setRoute($route);
@@ -25,9 +30,13 @@ class RouteFilterManager
         }
     }
 
-    public function addFilter(RouteFilterBase $filter): self
+    public function addFilter(string $name, RouteFilterBase $filter): self
     {
-        $this->filters[] = $filter;
+        if (isset($this->filters[$name])) {
+            throw new \Exception("Filter [$name] already exists");
+        }
+
+        $this->filters[$name] = $filter;
         return $this;
     }
 }
