@@ -26,8 +26,10 @@ function uuid(): string
     return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
 }
 
-function uniqBin($len = 10): string
+function uniqBin(int $len = 10): string
 {
+    // https://jason.pureconcepts.net/2013/09/php-convert-uniqid-to-timestamp/
+    // https://mariadb.com/kb/en/library/guiduuid-performance/
     if ($len < 8) {
         throw new \Exception("Length of uniqBin cannot less than 8");
     }
