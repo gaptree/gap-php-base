@@ -19,10 +19,10 @@
         "gap/config": "^2.0",
         "gap/http": "^2.0",
         "gap/routing": "^2.0",
-        "gap/i18n": "^2.0",
+        "gap/i18n": "^3.0",
         "gap/cache": "^1.1",
         "gap/dto": "^1.0",
-        "gap/meta": "^2.0",
+        "gap/meta": "^3.0",
         "gap/security": "^1.0"
     },
     "autoload": {
