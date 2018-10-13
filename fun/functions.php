@@ -26,6 +26,18 @@ function uuid(): string
     return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
 }
 
+function uniqBin($len = 10): string
+{
+    if ($len < 8) {
+        throw new \Exception("Length of uniqBin cannot less than 8");
+    }
+
+    $preLen = 6;
+    $micros = intval(microtime(true) * (10 ** 8));
+    $pre = substr(dechex($micros), 0, $preLen * 2);
+    return hex2bin($pre) . random_bytes($len - $preLen);
+}
+
 /*
 function obj($object)
 {
