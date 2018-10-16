@@ -89,7 +89,6 @@ class HttpHandlerTest extends TestCase
         $collection = new RouteCollection();
         $collection
             ->site('www')
-            ->access('public')
             ->get(
                 '/a/{zcode:[a-zA-Z0-9-]+}',
                 'fetchArticle',

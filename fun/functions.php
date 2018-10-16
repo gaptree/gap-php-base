@@ -26,7 +26,33 @@ function uuid(): string
     return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
 }
 
-function uniqBin(int $len = 10): string
+function uniqBin(int $salt = 0): string
+{
+    $offset = 12219292800;
+    $n100s = intval((microtime(true) + $offset) * (10 ** 7));
+
+    $version = '1'; // 4-bit
+    $timeHex = $version. dechex($n100s);
+    $timeBin = hex2bin($timeHex);
+    if (!$salt) {
+        return '' . $timeBin;
+    }
+
+    $maxSalt = 2 ** 14;
+    $seq = (2 ** 15) + ($salt % $maxSalt);
+    return hex2bin(dechex($seq)) . $timeBin;
+    /*
+    $seq = hex2bin(substr(md5($salt), 0, 4));
+    if ($seq === false) {
+        throw new \Exception('hex2bin failed');
+    }
+    $seq[0] = chr(ord($seq[0]) & 0x3f | 0x80);
+    return $seq . $timeBin;
+     */
+}
+
+/*
+function uniqBin_old(int $len = 10): string
 {
     // https://jason.pureconcepts.net/2013/09/php-convert-uniqid-to-timestamp/
     // https://mariadb.com/kb/en/library/guiduuid-performance/
@@ -39,6 +65,7 @@ function uniqBin(int $len = 10): string
     $pre = substr(dechex($micros), 0, $preLen * 2);
     return hex2bin($pre) . random_bytes($len - $preLen);
 }
+ */
 
 /*
 function obj($object)
